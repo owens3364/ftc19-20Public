@@ -5,36 +5,40 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class SliderArm implements SliderArmI {
 
-    private final DcMotor sliderDrive;
+    private final DcMotor[] sliderDrives;
 
     public SliderArm(HardwareMap map) {
         SliderArmDependenciesI dependencies = new SliderArmDependencies();
         dependencies.resolveDependencies(map);
-        sliderDrive = dependencies.getSliderDrive();
+        sliderDrives = dependencies.getSliderDrives();
     }
 
     public SliderArm(HardwareMap map, SliderArmDependenciesI dependencies) {
         dependencies.resolveDependencies(map);
-        sliderDrive = dependencies.getSliderDrive();
+        sliderDrives = dependencies.getSliderDrives();
     }
 
     @Override
     public void setLiftPower(double power) {
-        sliderDrive.setPower(power);
+        for (DcMotor sliderDrive : sliderDrives) {
+            sliderDrive.setPower(power);
+        }
     }
 
     @Override
     public double getLiftPosition() {
-        return sliderDrive.getCurrentPosition();
+        return sliderDrives[0].getCurrentPosition();
     }
 
     @Override
     public void setLiftPosition(int ticks) {
-        sliderDrive.setTargetPosition(ticks);
+        for (DcMotor sliderDrive : sliderDrives) {
+            sliderDrive.setTargetPosition(ticks);
+        }
     }
 
     @Override
-    public DcMotor getLift() {
-        return sliderDrive;
+    public DcMotor[] getLiftDrives() {
+        return sliderDrives;
     }
 }

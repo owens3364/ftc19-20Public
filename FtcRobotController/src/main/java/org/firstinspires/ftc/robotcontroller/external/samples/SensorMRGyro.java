@@ -29,6 +29,8 @@
 
 package org.firstinspires.ftc.robotcontroller.external.samples;
 
+import android.annotation.SuppressLint;
+
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -62,22 +64,19 @@ public class SensorMRGyro extends LinearOpMode {
    * implementations. {@link ModernRoboticsI2cGyro}, by contrast, provides functionality that
    * is unique to the Modern Robotics gyro sensor.
    */
-  IntegratingGyroscope gyro;
-  ModernRoboticsI2cGyro modernRoboticsI2cGyro;
 
   // A timer helps provide feedback while calibration is taking place
-  ElapsedTime timer = new ElapsedTime();
+  private ElapsedTime timer = new ElapsedTime();
 
   @Override
   public void runOpMode() {
 
     boolean lastResetState = false;
-    boolean curResetState  = false;
+    boolean curResetState;
 
     // Get a reference to a Modern Robotics gyro object. We use several interfaces
     // on this object to illustrate which interfaces support which functionality.
-    modernRoboticsI2cGyro = hardwareMap.get(ModernRoboticsI2cGyro.class, "gyro");
-    gyro = (IntegratingGyroscope)modernRoboticsI2cGyro;
+    ModernRoboticsI2cGyro modernRoboticsI2cGyro = hardwareMap.get(ModernRoboticsI2cGyro.class, "gyro");
     // If you're only interested int the IntegratingGyroscope interface, the following will suffice.
     // gyro = hardwareMap.get(IntegratingGyroscope.class, "gyro");
     // A similar approach will work for the Gyroscope interface, if that's all you need.
@@ -124,8 +123,8 @@ public class SensorMRGyro extends LinearOpMode {
       // Read dimensionalized data from the gyro. This gyro can report angular velocities
       // about all three axes. Additionally, it internally integrates the Z axis to
       // be able to report an absolute angular Z orientation.
-      AngularVelocity rates = gyro.getAngularVelocity(AngleUnit.DEGREES);
-      float zAngle = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
+      AngularVelocity rates = ((IntegratingGyroscope) modernRoboticsI2cGyro).getAngularVelocity(AngleUnit.DEGREES);
+      float zAngle = ((IntegratingGyroscope) modernRoboticsI2cGyro).getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
 
       // Read administrative information from the gyro
       int zAxisOffset = modernRoboticsI2cGyro.getZAxisOffset();
@@ -147,15 +146,18 @@ public class SensorMRGyro extends LinearOpMode {
     }
   }
 
-  String formatRaw(int rawValue) {
+  @SuppressLint("DefaultLocale")
+  private String formatRaw(int rawValue) {
     return String.format("%d", rawValue);
   }
 
-  String formatRate(float rate) {
+  @SuppressLint("DefaultLocale")
+  private String formatRate(float rate) {
     return String.format("%.3f", rate);
   }
 
-  String formatFloat(float rate) {
+  @SuppressLint("DefaultLocale")
+  private String formatFloat(float rate) {
     return String.format("%.3f", rate);
   }
 

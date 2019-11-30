@@ -6,5 +6,5 @@ public interface SliderArmI {
     void setLiftPower(double power);
     double getLiftPosition();
     void setLiftPosition(int ticks);
-    DcMotor getLift();
+    DcMotor[] getLiftDrives();
 }

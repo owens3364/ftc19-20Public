@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robots.drivetrains.mecanum;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.robots.Wheel;
@@ -22,7 +23,16 @@ public class MecanumDrive implements MecanumDriveI {
     }
 
     private MecanumDrivetrainI genDrivetrain(MecanumDependenciesI dependencies) {
-        return new MecanumDrivetrain(new Wheel(WheelPosition.FRONT_LEFT, dependencies.getFrontLeftDrive()), new Wheel(WheelPosition.FRONT_RIGHT, dependencies.getFrontRightDrive()), new Wheel(WheelPosition.REAR_LEFT, dependencies.getRearLeftDrive()), new Wheel(WheelPosition.REAR_RIGHT, dependencies.getRearRightDrive()));
+        MecanumDrivetrainI driveTrain = new MecanumDrivetrain(new Wheel(WheelPosition.FRONT_LEFT, dependencies.getFrontLeftDrive()), new Wheel(WheelPosition.FRONT_RIGHT, dependencies.getFrontRightDrive()), new Wheel(WheelPosition.REAR_LEFT, dependencies.getRearLeftDrive()), new Wheel(WheelPosition.REAR_RIGHT, dependencies.getRearRightDrive()));
+        driveTrain.getFrontLeft().getMotor().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        driveTrain.getFrontRight().getMotor().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        driveTrain.getRearLeft().getMotor().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        driveTrain.getRearRight().getMotor().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        driveTrain.getFrontLeft().getMotor().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        driveTrain.getFrontRight().getMotor().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        driveTrain.getRearLeft().getMotor().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        driveTrain.getRearRight().getMotor().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        return driveTrain;
     }
 
     @Override

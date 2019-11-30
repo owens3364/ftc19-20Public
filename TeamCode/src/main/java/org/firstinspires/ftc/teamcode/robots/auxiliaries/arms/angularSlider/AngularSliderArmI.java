@@ -8,5 +8,5 @@ public interface AngularSliderArmI extends SliderArmI {
     void setAngularPower(double power);
     double getAngularPosition();
     void setAngularPosition(int ticks);
-    DcMotor getAngular();
+    DcMotor[] getAngularDrives();
 }

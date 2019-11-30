@@ -14,7 +14,7 @@ Right drives --> "R0", "R1", "R2", etc.
 Slider drive --> "S0"
 
 # Angular Arm
-Angular drive --> "A0"
+Angular drives --> "A0", "A1", "A2", etc.
 
 # Gripper
 Left servo --> "LS"

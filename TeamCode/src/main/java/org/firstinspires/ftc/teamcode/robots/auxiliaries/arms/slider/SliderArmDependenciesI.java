@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.teamcode.robots.DependencySupplier;
 
 public interface SliderArmDependenciesI extends DependencySupplier {
-    String getSliderDriveName();
-    DcMotorSimple.Direction getSliderDriveDirection();
-    DcMotor getSliderDrive();
+    String[] getSliderDriveNames();
+    DcMotorSimple.Direction[] getSliderDriveDirections();
+    DcMotor[] getSliderDrives();
 }

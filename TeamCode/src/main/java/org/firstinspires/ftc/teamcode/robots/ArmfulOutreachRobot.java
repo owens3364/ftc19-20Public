@@ -48,8 +48,8 @@ public class ArmfulOutreachRobot extends ArmlessOutreachRobot implements Angular
     }
 
     @Override
-    public DcMotor getAngular() {
-        return angularSliderArm.getAngular();
+    public DcMotor[] getAngularDrives() {
+        return angularSliderArm.getAngularDrives();
     }
 
     @Override
@@ -68,37 +68,52 @@ public class ArmfulOutreachRobot extends ArmlessOutreachRobot implements Angular
     }
 
     @Override
-    public DcMotor getLift() {
-        return angularSliderArm.getLift();
+    public DcMotor[] getLiftDrives() {
+        return angularSliderArm.getLiftDrives();
     }
 
     @Override
-    public double getLeftPosition() {
-        return gripper.getLeftPosition();
+    public double getPitchPosition() {
+        return gripper.getPitchPosition();
     }
 
     @Override
-    public void setLeftPosition(double position) {
-        gripper.setLeftPosition(position);
+    public void setPitchPosition(double position) {
+        gripper.setPitchPosition(position);
     }
 
     @Override
-    public double getRightPosition() {
-        return gripper.getRightPosition();
+    public double getYawPosition() {
+        return gripper.getYawPosition();
     }
 
     @Override
-    public void setRightPosition(double position) {
-        gripper.setRightPosition(position);
+    public void setYawPosition(double position) {
+        gripper.setYawPosition(position);
     }
 
     @Override
-    public Servo getLeft() {
-        return gripper.getLeft();
+    public double getGripperPosition() {
+        return gripper.getGripperPosition();
     }
 
     @Override
-    public Servo getRight() {
-        return gripper.getRight();
+    public void setGripperPosition(double position) {
+        gripper.setGripperPosition(position);
+    }
+
+    @Override
+    public Servo getPitch() {
+        return gripper.getPitch();
+    }
+
+    @Override
+    public Servo getYaw() {
+        return gripper.getYaw();
+    }
+
+    @Override
+    public Servo getGripper() {
+        return gripper.getGripper();
     }
 }

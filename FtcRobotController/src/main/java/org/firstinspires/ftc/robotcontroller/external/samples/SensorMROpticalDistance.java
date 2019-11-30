@@ -46,13 +46,11 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 @Disabled
 public class SensorMROpticalDistance extends LinearOpMode {
 
-  OpticalDistanceSensor odsSensor;  // Hardware Device Object
-
   @Override
   public void runOpMode() {
 
     // get a reference to our Light Sensor object.
-    odsSensor = hardwareMap.get(OpticalDistanceSensor.class, "sensor_ods");
+    OpticalDistanceSensor odsSensor = hardwareMap.get(OpticalDistanceSensor.class, "sensor_ods");
 
     // wait for the start button to be pressed.
     waitForStart();

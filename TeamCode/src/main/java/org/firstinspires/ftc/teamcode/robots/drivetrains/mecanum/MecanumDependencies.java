@@ -10,9 +10,9 @@ public class MecanumDependencies implements MecanumDependenciesI {
     private static final String REAR_LEFT_DRIVE_NAME = "RL";
     private static final String REAR_RIGHT_DRIVE_NAME = "RR";
 
-    private static final DcMotorSimple.Direction FRONT_LEFT_DRIVE_DIRECTION = DcMotorSimple.Direction.REVERSE;
-    private static final DcMotorSimple.Direction FRONT_RIGHT_DRIVE_DIRECTION = DcMotorSimple.Direction.FORWARD;
-    private static final DcMotorSimple.Direction REAR_LEFT_DRIVE_DIRECTION = DcMotorSimple.Direction.REVERSE;
+    private static final DcMotorSimple.Direction FRONT_LEFT_DRIVE_DIRECTION = DcMotorSimple.Direction.FORWARD;
+    private static final DcMotorSimple.Direction FRONT_RIGHT_DRIVE_DIRECTION = DcMotorSimple.Direction.REVERSE;
+    private static final DcMotorSimple.Direction REAR_LEFT_DRIVE_DIRECTION = DcMotorSimple.Direction.FORWARD;
     private static final DcMotorSimple.Direction REAR_RIGHT_DRIVE_DIRECTION = DcMotorSimple.Direction.FORWARD;
 
     private String frontLeftDriveName;
@@ -198,7 +198,7 @@ public class MecanumDependencies implements MecanumDependenciesI {
                 rearLeftDrive = hardwareMap.dcMotor.get(rearLeftDriveName);
             } else {
                 rearLeftDrive = hardwareMap.dcMotor.get(REAR_LEFT_DRIVE_NAME);
-                rearLeftDriveName = REAR_RIGHT_DRIVE_NAME;
+                rearLeftDriveName = REAR_LEFT_DRIVE_NAME;
             }
         }
 

@@ -6,47 +6,53 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.robots.auxiliaries.arms.slider.SliderArmDependencies;
 
+import java.util.LinkedList;
+
 public class AngularSliderArmDependencies extends SliderArmDependencies implements AngularSliderArmDependenciesI {
-    private static final String ANGULAR_DRIVE_NAME = "A0";
+    private static final String ANGULAR_DRIVE_PREFIX = "A";
+
+    private static String getDefaultAngularName(int index) {
+        return ANGULAR_DRIVE_PREFIX + index;
+    }
 
     private static final DcMotorSimple.Direction ANGULAR_DRIVE_DIRECTION = DcMotorSimple.Direction.FORWARD;
 
-    private String angularDriveName;
+    private String[] angularDriveNames;
 
-    private DcMotorSimple.Direction angularDriveDirection;
+    private DcMotorSimple.Direction[] angularDriveDirections;
 
-    private DcMotor angularDrive;
+    private DcMotor[] angularDrives;
 
     private HardwareMap hardwareMap;
 
-    AngularSliderArmDependencies setSliderDriveName(String name) {
-        angularDriveName = name;
+    public AngularSliderArmDependencies setAngularDriveNames(String ... names) {
+        angularDriveNames = names;
         return this;
     }
 
-    AngularSliderArmDependencies setSliderDriveDirection(DcMotorSimple.Direction direction) {
-        angularDriveDirection = direction;
+    public AngularSliderArmDependencies setAngularDriveDirection(DcMotorSimple.Direction ... directions) {
+        angularDriveDirections = directions;
         return this;
     }
 
-    AngularSliderArmDependencies setSliderDrive(DcMotor motor) {
-        angularDrive = motor;
+    public AngularSliderArmDependencies setAngularDrive(DcMotor ... motors) {
+        angularDrives = motors;
         return this;
     }
 
     @Override
-    public String getAngularDriveName() {
-        return angularDriveName;
+    public String[] getAngularDriveNames() {
+        return angularDriveNames;
     }
 
     @Override
-    public DcMotorSimple.Direction getAngularDriveDirection() {
-        return angularDriveDirection;
+    public DcMotorSimple.Direction[] getAngularDriveDirections() {
+        return angularDriveDirections;
     }
 
     @Override
-    public DcMotor getAngularDrive() {
-        return angularDrive;
+    public DcMotor[] getAngularDrives() {
+        return angularDrives;
     }
 
     @Override
@@ -57,18 +63,9 @@ public class AngularSliderArmDependencies extends SliderArmDependencies implemen
     @Override
     public void resolveDependencies() {
         super.resolveDependencies();
-        if (angularDrive == null) {
-            if (angularDriveName != null) {
-                angularDrive = hardwareMap.dcMotor.get(angularDriveName);
-            } else {
-                angularDrive = hardwareMap.dcMotor.get(ANGULAR_DRIVE_NAME);
-                angularDriveName = ANGULAR_DRIVE_NAME;
-            }
-        }
-        if (angularDriveDirection == null) {
-            angularDriveDirection = ANGULAR_DRIVE_DIRECTION;
-        }
-        angularDrive.setDirection(angularDriveDirection);
+        resolveMotors();
+        resolveDirections();
+        reset();
     }
 
     @Override
@@ -76,5 +73,60 @@ public class AngularSliderArmDependencies extends SliderArmDependencies implemen
         super.resolveDependencies(map);
         hardwareMap = map;
         resolveDependencies();
+    }
+
+    private void resolveMotors() {
+        if (angularDrives == null) {
+            if (angularDriveNames != null) {
+                angularDrives = new DcMotor[angularDriveNames.length];
+                for (int i = 0; i < angularDriveNames.length; i++) {
+                    angularDrives[i] = hardwareMap.dcMotor.get(angularDriveNames[i] != null ? angularDriveNames[i] : getDefaultAngularName(i));
+                }
+            } else {
+                String angularDriveName = getDefaultAngularName(0);
+                angularDrives = new DcMotor[] {hardwareMap.dcMotor.get(angularDriveName)};
+                angularDriveNames = new String[] {angularDriveName};
+            }
+        } else {
+            LinkedList<DcMotor> drives = new LinkedList<>();
+            for (DcMotor drive : angularDrives) {
+                if (drive != null) drives.add(drive);
+            }
+            angularDrives = new DcMotor[0];
+            angularDrives = drives.toArray(angularDrives);
+        }
+    }
+
+    private void resolveDirections() {
+        if (angularDriveDirections != null) {
+            LinkedList<DcMotorSimple.Direction> driveDirections = new LinkedList<>();
+            for (DcMotorSimple.Direction driveDirection : angularDriveDirections) {
+                if (driveDirection != null) {
+                    driveDirections.add(driveDirection);
+                } else {
+                    driveDirections.add(ANGULAR_DRIVE_DIRECTION);
+                }
+            }
+            angularDriveDirections = new DcMotorSimple.Direction[0];
+            angularDriveDirections = driveDirections.toArray(angularDriveDirections);
+        } else {
+            angularDriveDirections = new DcMotorSimple.Direction[] {ANGULAR_DRIVE_DIRECTION};
+        }
+        if (angularDriveDirections.length == angularDrives.length) {
+            for (int i = 0; i < angularDriveDirections.length; i++) {
+                angularDrives[i].setDirection(angularDriveDirections[i]);
+            }
+        } else {
+            for (int i = 0; i < Math.min(angularDrives.length, angularDriveDirections.length); i++) {
+                angularDrives[i].setDirection(angularDriveDirections[i]);
+            }
+        }
+    }
+
+    private void reset() {
+        for (DcMotor angularDrive : angularDrives) {
+            angularDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            angularDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
     }
 }

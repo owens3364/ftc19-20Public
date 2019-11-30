@@ -29,6 +29,8 @@
 
 package org.firstinspires.ftc.robotcontroller.external.samples;
 
+import android.annotation.SuppressLint;
+
 import com.qualcomm.hardware.kauailabs.NavxMicroNavigationSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -61,17 +63,14 @@ public class SensorKLNavxMicro extends LinearOpMode {
      * implementations. {@link NavxMicroNavigationSensor}, by contrast, provides functionality that
      * is unique to the navX Micro sensor.
      */
-    IntegratingGyroscope gyro;
-    NavxMicroNavigationSensor navxMicro;
 
     // A timer helps provide feedback while calibration is taking place
-    ElapsedTime timer = new ElapsedTime();
+    private ElapsedTime timer = new ElapsedTime();
 
     @Override public void runOpMode() throws InterruptedException {
         // Get a reference to a Modern Robotics GyroSensor object. We use several interfaces
         // on this object to illustrate which interfaces support which functionality.
-        navxMicro = hardwareMap.get(NavxMicroNavigationSensor.class, "navx");
-        gyro = (IntegratingGyroscope)navxMicro;
+        NavxMicroNavigationSensor navxMicro = hardwareMap.get(NavxMicroNavigationSensor.class, "navx");
         // If you're only interested int the IntegratingGyroscope interface, the following will suffice.
         // gyro = hardwareMap.get(IntegratingGyroscope.class, "navx");
 
@@ -97,8 +96,8 @@ public class SensorKLNavxMicro extends LinearOpMode {
             // Read dimensionalized data from the gyro. This gyro can report angular velocities
             // about all three axes. Additionally, it internally integrates the Z axis to
             // be able to report an absolute angular Z orientation.
-            AngularVelocity rates = gyro.getAngularVelocity(AngleUnit.DEGREES);
-            Orientation angles = gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            AngularVelocity rates = ((IntegratingGyroscope) navxMicro).getAngularVelocity(AngleUnit.DEGREES);
+            Orientation angles = ((IntegratingGyroscope) navxMicro).getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
             telemetry.addLine()
                 .addData("dx", formatRate(rates.xRotationRate))
@@ -115,15 +114,17 @@ public class SensorKLNavxMicro extends LinearOpMode {
         }
     }
 
-    String formatRate(float rate) {
+    @SuppressLint("DefaultLocale")
+    private String formatRate(float rate) {
         return String.format("%.3f", rate);
     }
 
-    String formatAngle(AngleUnit angleUnit, double angle) {
+    private String formatAngle(AngleUnit angleUnit, double angle) {
         return formatDegrees(AngleUnit.DEGREES.fromUnit(angleUnit, angle));
     }
 
-    String formatDegrees(double degrees){
+    @SuppressLint("DefaultLocale")
+    private String formatDegrees(double degrees){
         return String.format("%.1f", AngleUnit.DEGREES.normalize(degrees));
     }
 }

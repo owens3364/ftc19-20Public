@@ -7,38 +7,42 @@ import org.firstinspires.ftc.teamcode.robots.auxiliaries.arms.slider.SliderArm;
 
 public class AngularSliderArm extends SliderArm implements AngularSliderArmI {
 
-    private final DcMotor angularDrive;
+    private final DcMotor[] angularDrives;
 
     public AngularSliderArm(HardwareMap map) {
         super(map);
         AngularSliderArmDependenciesI dependencies = new AngularSliderArmDependencies();
         dependencies.resolveDependencies(map);
-        angularDrive = dependencies.getAngularDrive();
+        angularDrives = dependencies.getAngularDrives();
     }
 
     public AngularSliderArm(HardwareMap map, AngularSliderArmDependenciesI dependencies) {
         super(map, dependencies);
         dependencies.resolveDependencies(map);
-        angularDrive = dependencies.getAngularDrive();
+        angularDrives = dependencies.getAngularDrives();
     }
 
     @Override
     public void setAngularPower(double power) {
-        angularDrive.setPower(power);
+        for (DcMotor angularDrive : angularDrives) {
+            angularDrive.setPower(power);
+        }
     }
 
     @Override
     public double getAngularPosition() {
-        return angularDrive.getCurrentPosition();
+        return angularDrives[0].getCurrentPosition();
     }
 
     @Override
     public void setAngularPosition(int ticks) {
-        angularDrive.setTargetPosition(ticks);
+        for (DcMotor angularDrive : angularDrives) {
+            angularDrive.setTargetPosition(ticks);
+        }
     }
 
     @Override
-    public DcMotor getAngular() {
-        return angularDrive;
+    public DcMotor[] getAngularDrives() {
+        return angularDrives;
     }
 }

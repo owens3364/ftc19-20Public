@@ -4,50 +4,68 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Gripper implements GripperI {
-    private final Servo leftServo;
-    private final Servo rightServo;
+    private final Servo pitchServo;
+    private final Servo yawServo;
+    private final Servo gripperServo;
 
     public Gripper(HardwareMap map) {
         GripperDependenciesI dependencies = new GripperDependencies();
         dependencies.resolveDependencies(map);
-        leftServo = dependencies.getLeftServo();
-        rightServo = dependencies.getRightServo();
+        pitchServo = dependencies.getPitchServo();
+        yawServo = dependencies.getYawServo();
+        gripperServo = dependencies.getGripperServo();
     }
 
     public Gripper(HardwareMap map, GripperDependenciesI dependencies) {
         dependencies.resolveDependencies(map);
-        leftServo = dependencies.getLeftServo();
-        rightServo = dependencies.getRightServo();
+        pitchServo = dependencies.getPitchServo();
+        yawServo = dependencies.getYawServo();
+        gripperServo = dependencies.getGripperServo();
     }
 
 
     @Override
-    public double getLeftPosition() {
-        return leftServo.getPosition();
+    public double getPitchPosition() {
+        return pitchServo.getPosition();
     }
 
     @Override
-    public void setLeftPosition(double position) {
-        leftServo.setPosition(position);
+    public void setPitchPosition(double position) {
+        pitchServo.setPosition(position);
     }
 
     @Override
-    public double getRightPosition() {
-        return rightServo.getPosition();
+    public double getYawPosition() {
+        return yawServo.getPosition();
     }
 
     @Override
-    public void setRightPosition(double position) {
-        rightServo.setPosition(position);
+    public void setYawPosition(double position) {
+        yawServo.setPosition(position);
     }
 
     @Override
-    public Servo getLeft() {
-        return leftServo;
+    public double getGripperPosition() {
+        return gripperServo.getPosition();
     }
 
     @Override
-    public Servo getRight() {
-        return rightServo;
+    public void setGripperPosition(double position) {
+        gripperServo.setPosition(position);
+    }
+
+    @Override
+    public Servo getPitch() {
+        return pitchServo;
+    }
+
+    @Override
+    public Servo getYaw() {
+        return yawServo;
+    }
+
+    @Override
+    public Servo getGripper() {
+        return gripperServo;
     }
 }

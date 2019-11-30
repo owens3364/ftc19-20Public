@@ -4,56 +4,79 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class GripperDependencies implements GripperDependenciesI {
-    private static final String LEFT_SERVO_NAME = "LS";
-    private static final String RIGHT_SERVO_NAME = "RS";
+    private static final String PITCH_SERVO_NAME = "PITCH";
+    private static final String YAW_SERVO_NAME = "YAW";
+    private static final String GRIPPER_SERVO_NAME = "GRIPPER";
 
-    private String leftServoName;
-    private String rightServoName;
+    private String pitchServoName;
+    private String yawServoName;
+    private String gripperServoName;
 
-    private Servo leftServo;
-    private Servo rightServo;
+    private Servo pitchServo;
+    private Servo yawServo;
+    private Servo gripperServo;
 
     private HardwareMap hardwareMap;
 
-    GripperDependencies setLeftServoName(String name) {
-        leftServoName = name;
+    public GripperDependencies setPitchServoName(String name) {
+        pitchServoName = name;
         return this;
     }
 
-    GripperDependencies setRightServoName(String name) {
-        rightServoName = name;
+    public GripperDependencies setYawServoName(String name) {
+        yawServoName = name;
         return this;
     }
 
-    GripperDependencies setLeftServo(Servo servo) {
-        leftServo = servo;
+    public GripperDependencies setGripperServoName(String name) {
+        gripperServoName = name;
         return this;
     }
 
-    GripperDependencies setRightServo(Servo servo) {
-        rightServo = servo;
+    public GripperDependencies setPitchServo(Servo servo) {
+        pitchServo = servo;
+        return this;
+    }
+
+    public GripperDependencies setYawServo(Servo servo) {
+        yawServo = servo;
+        return this;
+    }
+
+    public GripperDependencies setGripperServo(Servo servo) {
+        gripperServo = servo;
         return this;
     }
 
 
     @Override
-    public String getLeftServoName() {
-        return leftServoName;
+    public String getPitchServoName() {
+        return pitchServoName;
     }
 
     @Override
-    public Servo getLeftServo() {
-        return leftServo;
+    public Servo getPitchServo() {
+        return pitchServo;
     }
 
     @Override
-    public String getRightServoName() {
-        return rightServoName;
+    public String getYawServoName() {
+        return yawServoName;
     }
 
     @Override
-    public Servo getRightServo() {
-        return rightServo;
+    public Servo getYawServo() {
+        return yawServo;
+    }
+
+    @Override
+    public String getGripperServoName() {
+        return gripperServoName;
+    }
+
+    @Override
+    public Servo getGripperServo() {
+        return gripperServo;
     }
 
     @Override
@@ -63,20 +86,28 @@ public class GripperDependencies implements GripperDependenciesI {
 
     @Override
     public void resolveDependencies() {
-        if (leftServo == null) {
-            if (leftServoName != null) {
-                leftServo = hardwareMap.servo.get(leftServoName);
+        if (pitchServo == null) {
+            if (pitchServoName != null) {
+                pitchServo = hardwareMap.servo.get(pitchServoName);
             } else {
-                leftServo = hardwareMap.servo.get(LEFT_SERVO_NAME);
-                leftServoName = LEFT_SERVO_NAME;
+                pitchServo = hardwareMap.servo.get(PITCH_SERVO_NAME);
+                pitchServoName = PITCH_SERVO_NAME;
             }
         }
-        if (rightServo == null) {
-            if (rightServoName != null) {
-                rightServo = hardwareMap.servo.get(rightServoName);
+        if (yawServo == null) {
+            if (yawServoName != null) {
+                yawServo = hardwareMap.servo.get(yawServoName);
             } else {
-                rightServo = hardwareMap.servo.get(RIGHT_SERVO_NAME);
-                rightServoName = RIGHT_SERVO_NAME;
+                yawServo = hardwareMap.servo.get(YAW_SERVO_NAME);
+                yawServoName = YAW_SERVO_NAME;
+            }
+        }
+        if (gripperServo == null) {
+            if (gripperServoName != null) {
+                gripperServo = hardwareMap.servo.get(gripperServoName);
+            } else {
+                gripperServo = hardwareMap.servo.get(GRIPPER_SERVO_NAME);
+                gripperServoName = GRIPPER_SERVO_NAME;
             }
         }
     }

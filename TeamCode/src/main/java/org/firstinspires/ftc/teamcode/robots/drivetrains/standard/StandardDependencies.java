@@ -169,7 +169,7 @@ public class StandardDependencies implements StandardDependenciesI {
             leftDriveDirections = new DcMotorSimple.Direction[0];
             leftDriveDirections = driveDirections.toArray(leftDriveDirections);
         } else {
-            leftDriveDirections = new DcMotorSimple.Direction[] {DcMotorSimple.Direction.REVERSE};
+            leftDriveDirections = new DcMotorSimple.Direction[] {LEFT_DIRECTION};
         }
 
         if (rightDriveDirections != null) {
@@ -184,7 +184,7 @@ public class StandardDependencies implements StandardDependenciesI {
             rightDriveDirections = new DcMotorSimple.Direction[0];
             rightDriveDirections = driveDirections.toArray(rightDriveDirections);
         } else {
-            rightDriveDirections = new DcMotorSimple.Direction[] {DcMotorSimple.Direction.FORWARD};
+            rightDriveDirections = new DcMotorSimple.Direction[] {RIGHT_DIRECTION};
         }
 
         if (leftDriveDirections.length == leftDrives.length) {

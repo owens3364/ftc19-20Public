@@ -3,11 +3,14 @@ package org.firstinspires.ftc.teamcode.robots.auxiliaries.grippers;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public interface GripperI {
-    double getLeftPosition();
-    void setLeftPosition(double position);
-    double getRightPosition();
-    void setRightPosition(double position);
+    double getPitchPosition();
+    void setPitchPosition(double position);
+    double getYawPosition();
+    void setYawPosition(double position);
+    double getGripperPosition();
+    void setGripperPosition(double position);
 
-    Servo getLeft();
-    Servo getRight();
+    Servo getPitch();
+    Servo getYaw();
+    Servo getGripper();
 }

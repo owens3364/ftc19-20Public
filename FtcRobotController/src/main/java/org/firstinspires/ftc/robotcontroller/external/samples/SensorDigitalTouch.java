@@ -46,23 +46,13 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 @TeleOp(name = "Sensor: Digital touch", group = "Sensor")
 @Disabled
 public class SensorDigitalTouch extends LinearOpMode {
-    /**
-     * The REV Robotics Touch Sensor
-     * is treated as a digital channel.  It is HIGH if the button is unpressed.
-     * It pulls LOW if the button is pressed.
-     *
-     * Also, when you connect a REV Robotics Touch Sensor to the digital I/O port on the
-     * Expansion Hub using a 4-wire JST cable, the second pin gets connected to the Touch Sensor.
-     * The lower (first) pin stays unconnected.*
-     */
-
-    DigitalChannel digitalTouch;  // Hardware Device Object
 
     @Override
     public void runOpMode() {
 
         // get a reference to our digitalTouch object.
-        digitalTouch = hardwareMap.get(DigitalChannel.class, "sensor_digital");
+        // Hardware Device Object
+        DigitalChannel digitalTouch = hardwareMap.get(DigitalChannel.class, "sensor_digital");
 
         // set the digital channel to input.
         digitalTouch.setMode(DigitalChannel.Mode.INPUT);
@@ -76,7 +66,7 @@ public class SensorDigitalTouch extends LinearOpMode {
 
             // send the info back to driver station using telemetry function.
             // if the digital channel returns true it's HIGH and the button is unpressed.
-            if (digitalTouch.getState() == true) {
+            if (digitalTouch.getState()) {
                 telemetry.addData("Digital Touch", "Is Not Pressed");
             } else {
                 telemetry.addData("Digital Touch", "Is Pressed");

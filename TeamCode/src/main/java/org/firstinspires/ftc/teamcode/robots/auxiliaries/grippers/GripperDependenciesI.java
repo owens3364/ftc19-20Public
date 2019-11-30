@@ -5,8 +5,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.robots.DependencySupplier;
 
 public interface GripperDependenciesI extends DependencySupplier {
-    String getLeftServoName();
-    Servo getLeftServo();
-    String getRightServoName();
-    Servo getRightServo();
+    String getPitchServoName();
+    Servo getPitchServo();
+    String getYawServoName();
+    Servo getYawServo();
+    String getGripperServoName();
+    Servo getGripperServo();
 }

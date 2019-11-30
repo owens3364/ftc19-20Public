@@ -57,8 +57,8 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 @Disabled
 public class SensorDIO extends LinearOpMode {
 
-final int BLUE_LED_CHANNEL = 0;
-final int RED_LED_CHANNEL = 1;
+private static final int BLUE_LED_CHANNEL = 0;
+private static final int RED_LED_CHANNEL = 1;
 
   @Override
   public void runOpMode() {
