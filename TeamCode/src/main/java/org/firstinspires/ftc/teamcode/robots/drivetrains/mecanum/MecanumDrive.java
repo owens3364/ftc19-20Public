@@ -1,14 +1,11 @@
 package org.firstinspires.ftc.teamcode.robots.drivetrains.mecanum;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.robots.Wheel;
 import org.firstinspires.ftc.teamcode.robots.WheelPosition;
 
 public class MecanumDrive implements MecanumDriveI {
-    private static final int MOTOR_COUNT = 4;
-
     private final MecanumDrivetrainI driveTrain;
 
     public MecanumDrive(HardwareMap map) {
@@ -23,16 +20,7 @@ public class MecanumDrive implements MecanumDriveI {
     }
 
     private MecanumDrivetrainI genDrivetrain(MecanumDependenciesI dependencies) {
-        MecanumDrivetrainI driveTrain = new MecanumDrivetrain(new Wheel(WheelPosition.FRONT_LEFT, dependencies.getFrontLeftDrive()), new Wheel(WheelPosition.FRONT_RIGHT, dependencies.getFrontRightDrive()), new Wheel(WheelPosition.REAR_LEFT, dependencies.getRearLeftDrive()), new Wheel(WheelPosition.REAR_RIGHT, dependencies.getRearRightDrive()));
-        driveTrain.getFrontLeft().getMotor().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveTrain.getFrontRight().getMotor().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveTrain.getRearLeft().getMotor().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveTrain.getRearRight().getMotor().setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveTrain.getFrontLeft().getMotor().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveTrain.getFrontRight().getMotor().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveTrain.getRearLeft().getMotor().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveTrain.getRearRight().getMotor().setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        return driveTrain;
+        return new MecanumDrivetrain(new Wheel(WheelPosition.FRONT_LEFT, dependencies.getFrontLeftDrive()), new Wheel(WheelPosition.FRONT_RIGHT, dependencies.getFrontRightDrive()), new Wheel(WheelPosition.REAR_LEFT, dependencies.getRearLeftDrive()), new Wheel(WheelPosition.REAR_RIGHT, dependencies.getRearRightDrive()));
     }
 
     @Override
@@ -67,6 +55,11 @@ public class MecanumDrive implements MecanumDriveI {
                 default: break;
             }
         }
+        return driveTrain;
+    }
+
+    @Override
+    public MecanumDrivetrainI getDrivetrain() {
         return driveTrain;
     }
 }

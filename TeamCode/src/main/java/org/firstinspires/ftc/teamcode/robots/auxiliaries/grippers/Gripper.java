@@ -35,12 +35,12 @@ public class Gripper implements GripperI {
     }
 
     @Override
-    public double getYawPosition() {
+    public double getIntakePosition() {
         return yawServo.getPosition();
     }
 
     @Override
-    public void setYawPosition(double position) {
+    public void setIntakePosition(double position) {
         yawServo.setPosition(position);
     }
 
@@ -60,7 +60,7 @@ public class Gripper implements GripperI {
     }
 
     @Override
-    public Servo getYaw() {
+    public Servo getIntake() {
         return yawServo;
     }
 

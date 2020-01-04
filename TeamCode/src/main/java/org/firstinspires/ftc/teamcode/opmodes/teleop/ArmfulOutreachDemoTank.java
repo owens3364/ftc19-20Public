@@ -45,7 +45,7 @@ public class ArmfulOutreachDemoTank extends ArmlessOutreachDemoTank {
         pitchPosition = pitchPosition < 0 ? 0.0 : pitchPosition > 1 ? 1.0 : pitchPosition;
 
         privateRobot.setGripperPosition(gripperPosition);
-        privateRobot.setYawPosition(yawPosition);
+        privateRobot.setIntakePosition(yawPosition);
         privateRobot.setPitchPosition(pitchPosition);
     }
 

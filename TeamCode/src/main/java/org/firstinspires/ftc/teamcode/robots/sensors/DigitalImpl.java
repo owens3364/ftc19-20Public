@@ -9,17 +9,27 @@ public class DigitalImpl implements DigitalI {
 
     public DigitalImpl(String name, HardwareMap map) {
         sensor = map.digitalChannel.get(name);
+        sensor.setMode(DigitalChannel.Mode.INPUT);
+    }
+
+    public DigitalImpl(String name, HardwareMap map, DigitalChannel.Mode mode) {
+        sensor = map.digitalChannel.get(name);
+        sensor.setMode(mode);
     }
 
     @Override
     public boolean getHigh() {
-        sensor.setMode(DigitalChannel.Mode.INPUT);
+        if (sensor.getMode() == DigitalChannel.Mode.OUTPUT) {
+            sensor.setMode(DigitalChannel.Mode.INPUT);
+        }
         return sensor.getState();
     }
 
     @Override
     public void setHigh(boolean high) {
-        sensor.setMode(DigitalChannel.Mode.OUTPUT);
+        if (sensor.getMode() == DigitalChannel.Mode.INPUT) {
+            sensor.setMode(DigitalChannel.Mode.OUTPUT);
+        }
         sensor.setState(high);
     }
 }

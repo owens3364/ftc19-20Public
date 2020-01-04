@@ -5,7 +5,7 @@ import java.util.function.Function
 
 interface RecorderI {
     fun record(recordable: Recordable)
-    fun optimize(optimizingFunction: Function<LinkedList<String>?, LinkedList<String>?>)
+    fun optimize(optimizingFunction: Function<LinkedList<String>?, LinkedList<String>?>): RecorderI
     val statements: LinkedList<String>?
     fun getStatementsSeparatedBy(separator: String): String
 }

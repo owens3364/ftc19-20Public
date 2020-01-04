@@ -10,6 +10,4 @@ public interface CompetitionRobotI extends MecanumDriveI, SliderArmI, AuxiliaryA
     double getLiftHeight();
     double getDistanceL();
     double getDistanceR();
-    boolean getUpperLimit();
-    boolean getLowerLimit();
 }

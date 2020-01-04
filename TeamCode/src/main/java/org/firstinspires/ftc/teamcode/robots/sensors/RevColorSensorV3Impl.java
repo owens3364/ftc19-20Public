@@ -69,6 +69,11 @@ public class RevColorSensorV3Impl implements ColorI {
     }
 
     @Override
+    public DistanceUnit getUnit() {
+        return unit;
+    }
+
+    @Override
     public void setUnit(DistanceUnit unit) {
         this.unit = unit != null ? unit : this.unit;
     }

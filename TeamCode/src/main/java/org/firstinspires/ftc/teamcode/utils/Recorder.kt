@@ -18,8 +18,8 @@ class Recorder(private val byEncoder: Boolean) : RecorderI {
         })
     }
 
-    override fun optimize(optimizingFunction: Function<LinkedList<String>?, LinkedList<String>?>) {
-        statements = optimizingFunction.apply(statements)
+    override fun optimize(optimizingFunction: Function<LinkedList<String>?, LinkedList<String>?>): RecorderI {
+        return apply {statements = optimizingFunction.apply(statements)}
     }
 
     override fun getStatementsSeparatedBy(separator: String): String {

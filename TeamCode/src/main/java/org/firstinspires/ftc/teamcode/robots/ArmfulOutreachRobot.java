@@ -83,13 +83,13 @@ public class ArmfulOutreachRobot extends ArmlessOutreachRobot implements Angular
     }
 
     @Override
-    public double getYawPosition() {
-        return gripper.getYawPosition();
+    public double getIntakePosition() {
+        return gripper.getIntakePosition();
     }
 
     @Override
-    public void setYawPosition(double position) {
-        gripper.setYawPosition(position);
+    public void setIntakePosition(double position) {
+        gripper.setIntakePosition(position);
     }
 
     @Override
@@ -108,8 +108,8 @@ public class ArmfulOutreachRobot extends ArmlessOutreachRobot implements Angular
     }
 
     @Override
-    public Servo getYaw() {
-        return gripper.getYaw();
+    public Servo getIntake() {
+        return gripper.getIntake();
     }
 
     @Override
