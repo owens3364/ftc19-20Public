@@ -45,5 +45,7 @@ public class StrafeL extends LinearOpMode {
         fr.setPower(0);
         rl.setPower(0);
         rr.setPower(0);
+
+        Common.transitionToTeleOp(this);
     }
 }

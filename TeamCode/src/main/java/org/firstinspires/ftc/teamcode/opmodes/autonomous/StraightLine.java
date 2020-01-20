@@ -2,9 +2,13 @@ package org.firstinspires.ftc.teamcode.opmodes.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcore.internal.opmode.OpModeManagerImpl;
+import org.firstinspires.ftc.teamcode.opmodes.teleop.CompetitionTeleOp;
 
 @Autonomous(name="StraightLine")
 public class StraightLine extends LinearOpMode {
@@ -38,5 +42,7 @@ public class StraightLine extends LinearOpMode {
         fr.setPower(0);
         rl.setPower(0);
         rr.setPower(0);
+
+        Common.transitionToTeleOp(this);
     }
 }

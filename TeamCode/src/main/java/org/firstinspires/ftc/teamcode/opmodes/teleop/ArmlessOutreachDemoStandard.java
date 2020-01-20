@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.opmodes.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.robots.ArmlessOutreachRobot;
-import org.firstinspires.ftc.teamcode.robots.drivetrains.standard.StandardDriveInput;
+import org.firstinspires.ftc.teamcode.control.robots.ArmlessOutreachRobot;
+import org.firstinspires.ftc.teamcode.control.robots.drivetrains.standard.StandardDriveInput;
 
 @TeleOp(name="ArmlessOutreachBotStandard")
 public class ArmlessOutreachDemoStandard extends OpMode {

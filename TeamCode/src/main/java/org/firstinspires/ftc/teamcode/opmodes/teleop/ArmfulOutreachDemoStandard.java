@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.robots.ArmfulOutreachRobot;
+import org.firstinspires.ftc.teamcode.control.robots.ArmfulOutreachRobot;
 
 @TeleOp(name="ArmfulOutreachBotStandard")
 public class ArmfulOutreachDemoStandard extends ArmlessOutreachDemoStandard {
@@ -45,7 +45,7 @@ public class ArmfulOutreachDemoStandard extends ArmlessOutreachDemoStandard {
         pitchPosition = pitchPosition < 0 ? 0.0 : pitchPosition > 1 ? 1.0 : pitchPosition;
 
         privateRobot.setGripperPosition(gripperPosition);
-        privateRobot.setIntakePosition(yawPosition);
+        privateRobot.setYawPosition(yawPosition);
         privateRobot.setPitchPosition(pitchPosition);
     }
 
