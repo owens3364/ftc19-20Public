@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.control.robots.drivetrains.standard;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
 import org.firstinspires.ftc.teamcode.control.robots.Wheel;
 import org.firstinspires.ftc.teamcode.control.robots.WheelI;
 import org.firstinspires.ftc.teamcode.control.robots.WheelPosition;
@@ -11,14 +12,16 @@ public class StandardDrive implements StandardDriveI {
     private static final int MOTOR_COUNT = 2;
 
     private final StandardDrivetrainI driveTrain;
+    private final StandardDependenciesI dependencies;
 
     public StandardDrive(HardwareMap map) {
-        StandardDependenciesI dependencies = new StandardDependencies();
+        dependencies = new StandardDependencies();
         dependencies.resolveDependencies(map);
         driveTrain = genDrivetrain(dependencies);
     }
 
     public StandardDrive(HardwareMap map, StandardDependenciesI dependencies) {
+        this.dependencies = dependencies;
         dependencies.resolveDependencies(map);
         driveTrain = genDrivetrain(dependencies);
     }
@@ -74,6 +77,12 @@ public class StandardDrive implements StandardDriveI {
             }
         }
         return driveTrain;
+    }
+
+    @Override
+    public Refreshable refresh() {
+        dependencies.refresh();
+        return this;
     }
 }
 

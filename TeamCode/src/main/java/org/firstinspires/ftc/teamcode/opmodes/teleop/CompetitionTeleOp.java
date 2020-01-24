@@ -154,7 +154,7 @@ public class CompetitionTeleOp extends OpMode implements Recordable {
         telemetry.setMsTransmissionInterval(TELEMETRY_TRANSMISSION_INTERVAL);
 
         Object cachedObj = FtcRobotControllerActivity.soloInstance().getCachedRobotObject();
-        robot              = cachedObj instanceof CompetitionRobotI ? (CompetitionRobot) cachedObj : CompetitionRobot.instantiate(hardwareMap);
+        robot              = cachedObj instanceof CompetitionRobotI ? (CompetitionRobot) ((CompetitionRobotI) cachedObj).refresh() : CompetitionRobot.instantiate(hardwareMap);
         motorNames         = robot.getMotorNames();
         servoNames         = robot.getServoNames();
         motorVarNames      = robot.getMotorVarNames();

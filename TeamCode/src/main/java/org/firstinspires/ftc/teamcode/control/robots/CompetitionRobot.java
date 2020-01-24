@@ -37,6 +37,9 @@ import org.firstinspires.ftc.teamcode.control.robots.sensors.Rev2mDistanceImpl;
 import org.firstinspires.ftc.teamcode.control.robots.sensors.RevColorSensorV3Impl;
 import org.firstinspires.ftc.teamcode.utils.ObjectPair;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /*
 CONFIGURATION
 Front left drive motor:    FL               Port: 0    Bus: Motors    Hub: 1
@@ -147,6 +150,8 @@ public class CompetitionRobot implements CompetitionRobotI {
 
     private final DistanceI[] unitfulDevices;
 
+    private final List<Refreshable> refreshables;
+
     public static CompetitionRobot instantiate(HardwareMap map) {
         return new CompetitionRobot(new MecanumDrive(map), new SliderArm(map, new SliderArmDependencies().setSliderDriveNames(LEFT_LIFT_DRIVE_NAME, RIGHT_LIFT_DRIVE_NAME).setSliderDriveDirections(DcMotorSimple.Direction.REVERSE, DcMotorSimple.Direction.FORWARD)), new StatefulServo(map, new StatefulServoDependencies().setServoName(LEFT_AUXILIARY_ARM_SERVO_NAME)), new StatefulServo(map, new StatefulServoDependencies().setServoName(RIGHT_AUXILIARY_ARM_SERVO_NAME)), new Gripper(map), new CompliantIntake(map), map);
     }
@@ -173,6 +178,21 @@ public class CompetitionRobot implements CompetitionRobotI {
         this.lights = new IndexableStrip5VImpl(LIGHTS_NAME, map);
 
         unitfulDevices = new DistanceI[] { leftDistance, rightDistance, liftHeight, frontDistance, rearDistance, color };
+        refreshables = new LinkedList<>();
+        refreshables.add(mecanumDrive);
+        refreshables.add(sliderArm);
+        refreshables.add(leftArm);
+        refreshables.add(rightArm);
+        refreshables.add(gripper);
+        refreshables.add(intake);
+        refreshables.add(leftDistance);
+        refreshables.add(rightDistance);
+        refreshables.add(liftHeight);
+        refreshables.add(frontDistance);
+        refreshables.add(rearDistance);
+        refreshables.add(color);
+        refreshables.add(touch);
+        refreshables.add(lights);
     }
 
     @Override
@@ -756,5 +776,11 @@ public class CompetitionRobot implements CompetitionRobotI {
     @Observable(key = "Pattern Name")
     public String getPatternName() {
         return lights.getPattern().name();
+    }
+
+    @Override
+    public Refreshable refresh() {
+        refreshables.forEach(Refreshable::refresh);
+        return this;
     }
 }

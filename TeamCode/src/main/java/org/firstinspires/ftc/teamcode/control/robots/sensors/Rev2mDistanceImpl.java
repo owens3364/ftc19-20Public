@@ -4,6 +4,7 @@ import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
 
 public class Rev2mDistanceImpl implements DistanceI {
     private final Rev2mDistanceSensor sensor;
@@ -32,5 +33,11 @@ public class Rev2mDistanceImpl implements DistanceI {
     @Override
     public String getUnitName() {
         return unit.name();
+    }
+
+    @Override
+    public Refreshable refresh() {
+        sensor.initialize();
+        return this;
     }
 }

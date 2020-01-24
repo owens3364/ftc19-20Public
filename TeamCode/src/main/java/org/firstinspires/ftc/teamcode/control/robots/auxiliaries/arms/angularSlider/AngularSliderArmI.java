@@ -2,9 +2,10 @@ package org.firstinspires.ftc.teamcode.control.robots.auxiliaries.arms.angularSl
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
 import org.firstinspires.ftc.teamcode.control.robots.auxiliaries.arms.slider.SliderArmI;
 
-public interface AngularSliderArmI extends SliderArmI {
+public interface AngularSliderArmI extends SliderArmI, Refreshable {
     void setAngularPower(double power);
     double getAngularPosition();
     void setAngularPosition(int ticks);

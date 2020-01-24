@@ -116,4 +116,13 @@ public class ArmfulOutreachRobot extends ArmlessOutreachRobot implements Angular
     public Servo getGripper() {
         return gripper.getGripper();
     }
+
+    @Override
+    public Refreshable refresh() {
+        super.refresh();
+        angularSliderArm.refresh();
+        gripper.refresh();
+        return this;
+    }
+
 }

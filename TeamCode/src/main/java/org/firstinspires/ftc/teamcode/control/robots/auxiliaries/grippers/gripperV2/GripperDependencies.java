@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.control.robots.auxiliaries.grippers.gripp
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
+
 public class GripperDependencies implements GripperDependenciesI {
     private static final String PITCH_SERVO_NAME = "PITCH";
     private static final String GRIPPER_SERVO_NAME = "GRIPPER";
@@ -84,5 +86,10 @@ public class GripperDependencies implements GripperDependenciesI {
     public void resolveDependencies(HardwareMap map) {
         hardwareMap = map;
         resolveDependencies();
+    }
+
+    @Override
+    public Refreshable refresh() {
+        return this;
     }
 }

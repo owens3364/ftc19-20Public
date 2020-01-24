@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
 import org.firstinspires.ftc.teamcode.control.robots.auxiliaries.arms.slider.SliderArmDependencies;
 
 import java.util.LinkedList;
@@ -35,7 +36,7 @@ public class AngularSliderArmDependencies extends SliderArmDependencies implemen
         return this;
     }
 
-    public AngularSliderArmDependencies setAngularDrive(DcMotor ... motors) {
+    public AngularSliderArmDependencies setAngularDrives(DcMotor ... motors) {
         angularDrives = motors;
         return this;
     }
@@ -112,14 +113,8 @@ public class AngularSliderArmDependencies extends SliderArmDependencies implemen
         } else {
             angularDriveDirections = new DcMotorSimple.Direction[] {ANGULAR_DRIVE_DIRECTION};
         }
-        if (angularDriveDirections.length == angularDrives.length) {
-            for (int i = 0; i < angularDriveDirections.length; i++) {
-                angularDrives[i].setDirection(angularDriveDirections[i]);
-            }
-        } else {
-            for (int i = 0; i < Math.min(angularDrives.length, angularDriveDirections.length); i++) {
-                angularDrives[i].setDirection(angularDriveDirections[i]);
-            }
+        for (int i = 0; i < Math.min(angularDrives.length, angularDriveDirections.length); i++) {
+            angularDrives[i].setDirection(angularDriveDirections[i]);
         }
     }
 
@@ -128,5 +123,12 @@ public class AngularSliderArmDependencies extends SliderArmDependencies implemen
             angularDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             angularDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
+    }
+
+    @Override
+    public Refreshable refresh() {
+        reset();
+        resolveDirections();
+        return this;
     }
 }

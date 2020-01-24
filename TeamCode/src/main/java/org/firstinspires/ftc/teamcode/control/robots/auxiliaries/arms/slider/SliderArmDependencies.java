@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
+
 import java.util.LinkedList;
 
 public class SliderArmDependencies implements SliderArmDependenciesI {
@@ -108,14 +110,8 @@ public class SliderArmDependencies implements SliderArmDependenciesI {
         } else {
             sliderDriveDirections = new DcMotorSimple.Direction[] {SLIDER_DRIVE_DIRECTION};
         }
-        if (sliderDriveDirections.length == sliderDrives.length) {
-            for (int i = 0; i < sliderDriveDirections.length; i++) {
-                sliderDrives[i].setDirection(sliderDriveDirections[i]);
-            }
-        } else {
-            for (int i = 0; i < Math.min(sliderDrives.length, sliderDriveDirections.length); i++) {
-                sliderDrives[i].setDirection(sliderDriveDirections[i]);
-            }
+        for (int i = 0; i < Math.min(sliderDrives.length, sliderDriveDirections.length); i++) {
+            sliderDrives[i].setDirection(sliderDriveDirections[i]);
         }
     }
 
@@ -124,5 +120,11 @@ public class SliderArmDependencies implements SliderArmDependenciesI {
             sliderDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             sliderDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
+    }
+
+    @Override
+    public Refreshable refresh() {
+        resolveDirections();
+        return this;
     }
 }

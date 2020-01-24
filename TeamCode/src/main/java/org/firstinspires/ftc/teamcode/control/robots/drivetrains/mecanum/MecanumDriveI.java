@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.control.robots.drivetrains.mecanum;
 
-public interface MecanumDriveI {
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
+
+public interface MecanumDriveI extends Refreshable {
     MecanumDrivetrainI driveBySticks(MecanumDriveInputI input);
     MecanumDrivetrainI all(double power);
     MecanumDrivetrainI only(double ... powers);

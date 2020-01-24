@@ -3,18 +3,22 @@ package org.firstinspires.ftc.teamcode.control.robots.auxiliaries.grippers.gripp
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
+
 public class Gripper implements GripperI {
     private final Servo pitchServo;
     private final Servo gripperServo;
+    private final GripperDependenciesI dependencies;
 
     public Gripper(HardwareMap map) {
-        GripperDependenciesI dependencies = new GripperDependencies();
+        dependencies = new GripperDependencies();
         dependencies.resolveDependencies(map);
         pitchServo = dependencies.getPitchServo();
         gripperServo = dependencies.getGripperServo();
     }
 
     public Gripper(HardwareMap map, GripperDependenciesI dependencies) {
+        this.dependencies = dependencies;
         dependencies.resolveDependencies(map);
         pitchServo = dependencies.getPitchServo();
         gripperServo = dependencies.getGripperServo();
@@ -49,5 +53,11 @@ public class Gripper implements GripperI {
     @Override
     public Servo getGripper() {
         return gripperServo;
+    }
+
+    @Override
+    public Refreshable refresh() {
+        dependencies.refresh();
+        return this;
     }
 }

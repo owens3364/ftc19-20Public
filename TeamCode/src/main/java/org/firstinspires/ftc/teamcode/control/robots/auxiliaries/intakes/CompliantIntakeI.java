@@ -3,9 +3,10 @@ package org.firstinspires.ftc.teamcode.control.robots.auxiliaries.intakes;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
 import org.firstinspires.ftc.teamcode.utils.ObjectPair;
 
-public interface CompliantIntakeI {
+public interface CompliantIntakeI extends Refreshable {
     ObjectPair<Double, Double> getIntakePitchPositions();
     void setIntakePitchPositions(double position);
     double getLeftPosition();

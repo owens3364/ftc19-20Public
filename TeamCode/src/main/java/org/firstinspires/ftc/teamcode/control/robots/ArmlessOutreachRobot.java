@@ -37,4 +37,10 @@ public class ArmlessOutreachRobot implements StandardDriveI {
     public StandardDrivetrainI only(double... powers) {
         return standardDrive.only(powers);
     }
+
+    @Override
+    public Refreshable refresh() {
+        standardDrive.refresh();
+        return this;
+    }
 }

@@ -3,21 +3,23 @@ package org.firstinspires.ftc.teamcode.control.robots.auxiliaries.arms.angularSl
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
 import org.firstinspires.ftc.teamcode.control.robots.auxiliaries.arms.slider.SliderArm;
 
 public class AngularSliderArm extends SliderArm implements AngularSliderArmI {
-
+    private final AngularSliderArmDependenciesI dependencies;
     private final DcMotor[] angularDrives;
 
     public AngularSliderArm(HardwareMap map) {
         super(map);
-        AngularSliderArmDependenciesI dependencies = new AngularSliderArmDependencies();
+        dependencies = new AngularSliderArmDependencies();
         dependencies.resolveDependencies(map);
         angularDrives = dependencies.getAngularDrives();
     }
 
     public AngularSliderArm(HardwareMap map, AngularSliderArmDependenciesI dependencies) {
         super(map, dependencies);
+        this.dependencies = dependencies;
         dependencies.resolveDependencies(map);
         angularDrives = dependencies.getAngularDrives();
     }
@@ -44,5 +46,11 @@ public class AngularSliderArm extends SliderArm implements AngularSliderArmI {
     @Override
     public DcMotor[] getAngularDrives() {
         return angularDrives;
+    }
+
+    @Override
+    public Refreshable refresh() {
+        dependencies.refresh();
+        return null;
     }
 }

@@ -2,19 +2,22 @@ package org.firstinspires.ftc.teamcode.control.robots.drivetrains.mecanum;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
 import org.firstinspires.ftc.teamcode.control.robots.Wheel;
 import org.firstinspires.ftc.teamcode.control.robots.WheelPosition;
 
 public class MecanumDrive implements MecanumDriveI {
     private final MecanumDrivetrainI driveTrain;
+    private final MecanumDependenciesI dependencies;
 
     public MecanumDrive(HardwareMap map) {
-        MecanumDependenciesI dependencies = new MecanumDependencies();
+        dependencies = new MecanumDependencies();
         dependencies.resolveDependencies(map);
         driveTrain = genDrivetrain(dependencies);
     }
 
     public MecanumDrive(HardwareMap map, MecanumDependenciesI dependencies) {
+        this.dependencies = dependencies;
         dependencies.resolveDependencies(map);
         driveTrain = genDrivetrain(dependencies);
     }
@@ -61,5 +64,11 @@ public class MecanumDrive implements MecanumDriveI {
     @Override
     public MecanumDrivetrainI getDrivetrain() {
         return driveTrain;
+    }
+
+    @Override
+    public Refreshable refresh() {
+        dependencies.refresh();
+        return this;
     }
 }

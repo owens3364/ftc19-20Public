@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
 import org.firstinspires.ftc.teamcode.utils.ObjectPair;
 
 public class CompliantIntake implements CompliantIntakeI {
@@ -11,9 +12,10 @@ public class CompliantIntake implements CompliantIntakeI {
     private final Servo leftServo;
     private final Servo rightServo;
     private final ObjectPair<DcMotor, DcMotor> intakeDrives;
+    private final CompliantIntakeDependenciesI dependencies;
 
     public CompliantIntake(HardwareMap map) {
-        CompliantIntakeDependenciesI dependencies = new CompliantIntakeDependencies();
+        this.dependencies = new CompliantIntakeDependencies();
         dependencies.resolveDependencies(map);
         pitchServos = dependencies.getPitchServos();
         leftServo = dependencies.getLeftServo();
@@ -22,6 +24,7 @@ public class CompliantIntake implements CompliantIntakeI {
     }
 
     public CompliantIntake(HardwareMap map, CompliantIntakeDependenciesI dependencies) {
+        this.dependencies = dependencies;
         dependencies.resolveDependencies(map);
         pitchServos = dependencies.getPitchServos();
         leftServo = dependencies.getLeftServo();
@@ -89,5 +92,11 @@ public class CompliantIntake implements CompliantIntakeI {
     @Override
     public ObjectPair<DcMotor, DcMotor> getIntake() {
         return intakeDrives;
+    }
+
+    @Override
+    public Refreshable refresh() {
+        dependencies.refresh();
+        return this;
     }
 }

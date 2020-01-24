@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
+
 public class MecanumDependencies implements MecanumDependenciesI {
     private static final String FRONT_LEFT_DRIVE_NAME = "FL";
     private static final String FRONT_RIGHT_DRIVE_NAME = "FR";
@@ -230,5 +232,11 @@ public class MecanumDependencies implements MecanumDependenciesI {
         frontRightDrive.setDirection(frontRightDriveDirection);
         rearLeftDrive.setDirection(rearLeftDriveDirection);
         rearRightDrive.setDirection(rearRightDriveDirection);
+    }
+
+    @Override
+    public Refreshable refresh() {
+        resolveDirections();
+        return this;
     }
 }

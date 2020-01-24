@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
 
 public class RevColorSensorV3Impl implements ColorI {
     private final RevColorSensorV3 sensor;
@@ -86,5 +87,11 @@ public class RevColorSensorV3Impl implements ColorI {
     @Override
     public String getUnitName() {
         return unit.name();
+    }
+
+    @Override
+    public Refreshable refresh() {
+        sensor.initialize(BroadcomColorSensor.Parameters.createForAPDS9151());
+        return this;
     }
 }

@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
+
 import java.util.LinkedList;
 
 public class StandardDependencies implements StandardDependenciesI {
@@ -187,24 +189,18 @@ public class StandardDependencies implements StandardDependenciesI {
             rightDriveDirections = new DcMotorSimple.Direction[] {RIGHT_DIRECTION};
         }
 
-        if (leftDriveDirections.length == leftDrives.length) {
-            for (int i = 0; i < leftDriveDirections.length; i++) {
-                leftDrives[i].setDirection(leftDriveDirections[i]);
-            }
-        } else {
-            for (int i = 0; i < Math.min(leftDrives.length, leftDriveDirections.length); i++) {
-                leftDrives[i].setDirection(leftDriveDirections[i]);
-            }
+        for (int i = 0; i < Math.min(leftDrives.length, leftDriveDirections.length); i++) {
+            leftDrives[i].setDirection(leftDriveDirections[i]);
         }
 
-        if (rightDriveDirections.length == rightDrives.length) {
-            for (int i = 0; i < rightDriveDirections.length; i++) {
-                rightDrives[i].setDirection(rightDriveDirections[i]);
-            }
-        } else {
-            for (int i = 0; i < Math.min(rightDrives.length, rightDriveDirections.length); i++) {
-                rightDrives[i].setDirection(rightDriveDirections[i]);
-            }
+        for (int i = 0; i < Math.min(rightDrives.length, rightDriveDirections.length); i++) {
+            rightDrives[i].setDirection(rightDriveDirections[i]);
         }
+    }
+
+    @Override
+    public Refreshable refresh() {
+        resolveDirections();
+        return this;
     }
 }

@@ -5,9 +5,10 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
 import org.firstinspires.ftc.teamcode.utils.ObjectPair;
 
-public class CompliantIntakeDependencies implements CompliantIntakeDependenciesI {
+public class CompliantIntakeDependencies implements CompliantIntakeDependenciesI, Refreshable {
     private static final String PITCH_SERVO_A_NAME = "PITCHA";
     private static final String PITCH_SERVO_B_NAME = "PITCHB";
     private static final String LEFT_SERVO_NAME = "INTAKE_LEFT";
@@ -207,6 +208,16 @@ public class CompliantIntakeDependencies implements CompliantIntakeDependenciesI
                 intakeDriveBName = INTAKE_DRIVE_B_NAME;
             }
         }
+        setModes();
+    }
+
+    @Override
+    public void resolveDependencies(HardwareMap map) {
+        this.map = map;
+        resolveDependencies();
+    }
+
+    private void setModes() {
         intakeDriveA.setDirection(intakeDriveADirection != null ? intakeDriveADirection : INTAKE_DRIVE_A_DIRECTION);
         intakeDriveB.setDirection(intakeDriveBDirection != null ? intakeDriveBDirection : INTAKE_DRIVE_B_DIRECTION);
         intakeDriveA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -216,8 +227,8 @@ public class CompliantIntakeDependencies implements CompliantIntakeDependenciesI
     }
 
     @Override
-    public void resolveDependencies(HardwareMap map) {
-        this.map = map;
-        resolveDependencies();
+    public Refreshable refresh() {
+        setModes();
+        return this;
     }
 }

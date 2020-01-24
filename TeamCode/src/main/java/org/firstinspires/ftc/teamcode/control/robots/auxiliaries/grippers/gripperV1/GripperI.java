@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode.control.robots.auxiliaries.grippers.gripp
 
 import com.qualcomm.robotcore.hardware.Servo;
 
-public interface GripperI {
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
+
+public interface GripperI extends Refreshable {
     double getPitchPosition();
     void setPitchPosition(double position);
     double getYawPosition();

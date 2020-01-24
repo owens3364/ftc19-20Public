@@ -4,8 +4,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.control.robots.DependencySupplier;
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
 
-public interface MecanumDependenciesI extends DependencySupplier {
+public interface MecanumDependenciesI extends DependencySupplier, Refreshable {
     String getFrontLeftDriveName();
     String getFrontRightDriveName();
     String getRearLeftDriveName();

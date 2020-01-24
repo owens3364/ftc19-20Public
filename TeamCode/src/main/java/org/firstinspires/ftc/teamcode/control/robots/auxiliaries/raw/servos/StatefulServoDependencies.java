@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.control.robots.auxiliaries.raw.servos;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
+
 public class StatefulServoDependencies implements StatefulServoDependenciesI {
 
     private String servoName;
@@ -59,5 +61,10 @@ public class StatefulServoDependencies implements StatefulServoDependenciesI {
     public void resolveDependencies(HardwareMap map) {
         hardwareMap = map;
         resolveDependencies();
+    }
+
+    @Override
+    public Refreshable refresh() {
+        return this;
     }
 }

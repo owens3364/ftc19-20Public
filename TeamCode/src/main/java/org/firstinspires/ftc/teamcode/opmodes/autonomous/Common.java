@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.opmodes.teleop.ArmlessOutreachDemoStandard
 import org.firstinspires.ftc.teamcode.opmodes.teleop.ArmlessOutreachDemoTank;
 import org.firstinspires.ftc.teamcode.opmodes.teleop.CompetitionTeleOp;
 
+import java.lang.ref.WeakReference;
 import java.util.Objects;
 
 class Common {
@@ -23,6 +24,15 @@ class Common {
     };
 
     private static String opModeName;
+    private static WeakReference<OpModeManagerImpl> opModeManagerWeakReference;
+
+    static void setOpModeManager(OpModeManagerImpl opModeManager) {
+        opModeManagerWeakReference = new WeakReference<>(opModeManager);
+    }
+
+    static OpModeManagerImpl getOpModeManager() {
+        return opModeManagerWeakReference.get();
+    }
 
     private static String getCompetitionOpModeName() {
         if (opModeName != null) {

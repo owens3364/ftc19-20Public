@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.control.robots.drivetrains.mecanum.Mecanum
 import org.firstinspires.ftc.teamcode.control.robots.drivetrains.mecanum.MecanumDriveI;
 import org.firstinspires.ftc.teamcode.control.robots.sensors.ColorI;
 
-public interface CompetitionRobotI extends MecanumDriveI, SliderArmI, AuxiliaryArmsI, GripperI, CompliantIntakeI, ColorI, IndexableStrip5V, RobotEssentials, MecanumDiagnostics, SliderArmDiagnostics, AuxiliaryArmsDiagnostics, GripperDiagnostics, CompliantIntakeDiagnostics, IndexableStrip5VDiagnostics {
+public interface CompetitionRobotI extends RobotEssentials, MecanumDriveI, SliderArmI, AuxiliaryArmsI, GripperI, CompliantIntakeI, ColorI, IndexableStrip5V, MecanumDiagnostics, SliderArmDiagnostics, AuxiliaryArmsDiagnostics, GripperDiagnostics, CompliantIntakeDiagnostics, IndexableStrip5VDiagnostics {
     double getLiftHeight();
     double getDistanceLeft();
     double getDistanceRight();

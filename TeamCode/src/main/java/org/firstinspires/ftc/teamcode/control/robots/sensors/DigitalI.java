@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.control.robots.sensors;
 
-public interface DigitalI {
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
+
+public interface DigitalI extends Refreshable {
     boolean getHigh();
     void setHigh(boolean high);
 }

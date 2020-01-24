@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode.control.robots.auxiliaries.raw.servos;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
-public interface AuxiliaryArmsI {
+import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
+
+public interface AuxiliaryArmsI extends Refreshable {
     double getLeftServoPosition();
     void setLeftServoPosition(double position);
 
@@ -16,4 +18,9 @@ public interface AuxiliaryArmsI {
     void incrRight(double incr);
 
     Servo getRightServoA();
+
+    @Override
+    default Refreshable refresh() {
+        return this;
+    }
 }
