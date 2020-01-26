@@ -46,13 +46,16 @@ class Common {
         return opModeName;
     }
 
-    static void transitionToTeleOp(OpMode currentOpMode) {
-        ((OpModeManagerImpl) currentOpMode.internalOpModeServices).initActiveOpMode(getCompetitionOpModeName());
-        new Thread(() -> {
+    static Thread scheduleTransitionToTeleOp(OpMode currentOpMode) {
+        Thread ret = new Thread(() -> {
             try {
+                Thread.sleep(30000);
+                ((OpModeManagerImpl) currentOpMode.internalOpModeServices).initActiveOpMode(getCompetitionOpModeName());
                 Thread.sleep(8000);
+                ((OpModeManagerImpl) currentOpMode.internalOpModeServices).startActiveOpMode();
             } catch (InterruptedException ignored) {}
-            ((OpModeManagerImpl) currentOpMode.internalOpModeServices).startActiveOpMode();
-        }).start();
+        });
+        ret.start();
+        return ret;
     }
 }

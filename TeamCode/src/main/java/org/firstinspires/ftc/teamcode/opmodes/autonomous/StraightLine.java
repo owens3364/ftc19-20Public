@@ -14,9 +14,9 @@ public class StraightLine extends LinearOpMode {
         CompetitionRobot robot = CompetitionRobot.instantiate(hardwareMap);
         FtcRobotControllerActivity.soloInstance().setCachedRobotObject(robot);
         waitForStart();
+        FtcRobotControllerActivity.soloInstance().setOpModeScheduler(Common.scheduleTransitionToTeleOp(this));
         robot.all(-.8);
         sleep(2000);
         robot.all(0);
-        Common.transitionToTeleOp(this);
     }
 }

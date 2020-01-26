@@ -167,6 +167,8 @@ public class FtcRobotControllerActivity extends Activity {
     SpeechRecognizer recognizer;
 
     boolean listening = false;
+
+    private Thread opModeScheduler;
     /*
     END STUFF I ADDED
      */
@@ -968,6 +970,14 @@ public class FtcRobotControllerActivity extends Activity {
 
     public void setCachedRobotObject(Object obj) {
         cachedObject = obj;
+    }
+
+    public Thread getOpModeScheduler() {
+        return opModeScheduler;
+    }
+
+    public void setOpModeScheduler(Thread th) {
+        opModeScheduler = th;
     }
 
   /*

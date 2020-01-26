@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
+
 @Autonomous(name="StrafeL")
 public class StrafeL extends LinearOpMode {
 
@@ -22,6 +24,7 @@ public class StrafeL extends LinearOpMode {
         rr.setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
+        FtcRobotControllerActivity.soloInstance().setOpModeScheduler(Common.scheduleTransitionToTeleOp(this));
 
         pitch.setPosition(1);
 
@@ -45,7 +48,5 @@ public class StrafeL extends LinearOpMode {
         fr.setPower(0);
         rl.setPower(0);
         rr.setPower(0);
-
-        Common.transitionToTeleOp(this);
     }
 }
