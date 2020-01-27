@@ -46,8 +46,8 @@ public class CompetitionTeleOp extends OpMode implements Recordable {
 
     private static final byte LOW_SPEED_CONTROL_FACTOR = 0x3; // This is exponential ie stickValue^LOW_SPEED_CONTROL_FACTOR
 
-    private static final double DEFAULT_PITCH_POSITION = -0.05;
-    private static final byte DEFAULT_GRIPPER_POSITION = 0x0;
+    private static final double DEFAULT_PITCH_POSITION = 0.3;
+    private static final double DEFAULT_GRIPPER_POSITION = 0.5;
 
     private static final double DEFAULT_INTAKE_PITCH_POSITION = 0.5;
     private static final byte DEFAULT_INTAKE_LEFT_POSITION = 0x1;
@@ -155,6 +155,7 @@ public class CompetitionTeleOp extends OpMode implements Recordable {
 
         Object cachedObj = FtcRobotControllerActivity.soloInstance().getCachedRobotObject();
         robot              = cachedObj instanceof CompetitionRobotI ? (CompetitionRobot) ((CompetitionRobotI) cachedObj).refresh() : CompetitionRobot.instantiate(hardwareMap);
+        FtcRobotControllerActivity.soloInstance().setCachedRobotObject(robot);
         motorNames         = robot.getMotorNames();
         servoNames         = robot.getServoNames();
         motorVarNames      = robot.getMotorVarNames();

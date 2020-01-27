@@ -50,6 +50,7 @@ class Common {
         Thread ret = new Thread(() -> {
             try {
                 Thread.sleep(30000);
+                ((OpModeManagerImpl) currentOpMode.internalOpModeServices).stopActiveOpMode();
                 ((OpModeManagerImpl) currentOpMode.internalOpModeServices).initActiveOpMode(getCompetitionOpModeName());
                 Thread.sleep(8000);
                 ((OpModeManagerImpl) currentOpMode.internalOpModeServices).startActiveOpMode();
