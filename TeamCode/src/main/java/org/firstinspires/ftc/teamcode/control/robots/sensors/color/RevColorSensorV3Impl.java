@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.control.robots.sensors;
+package org.firstinspires.ftc.teamcode.control.robots.sensors.color;
 
 import com.qualcomm.hardware.broadcom.BroadcomColorSensor;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
@@ -10,13 +10,19 @@ import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
 
 public class RevColorSensorV3Impl implements ColorI {
     private final RevColorSensorV3 sensor;
+    private final RevColorSensorV3DependenciesI dependencies;
+
     private DistanceUnit unit = DistanceUnit.MM;
 
-    public RevColorSensorV3Impl(String name, HardwareMap map) {
-        sensor = map.get(RevColorSensorV3.class, name);
-        sensor.initialize(BroadcomColorSensor.Parameters.createForAPDS9151());
+    public RevColorSensorV3Impl(HardwareMap map) {
+        this(map, new RevColorSensorV3Dependencies());
     }
 
+    public RevColorSensorV3Impl(HardwareMap map, RevColorSensorV3DependenciesI dependencies) {
+        this.dependencies = dependencies;
+        dependencies.resolveDependencies(map);
+        sensor = dependencies.getSensor();
+    }
 
     @Override
     public double getRed() {
@@ -91,7 +97,7 @@ public class RevColorSensorV3Impl implements ColorI {
 
     @Override
     public Refreshable refresh() {
-        sensor.initialize(BroadcomColorSensor.Parameters.createForAPDS9151());
+        dependencies.refresh();
         return this;
     }
 }

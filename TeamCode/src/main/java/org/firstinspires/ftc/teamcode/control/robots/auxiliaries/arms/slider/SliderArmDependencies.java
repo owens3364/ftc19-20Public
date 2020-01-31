@@ -4,12 +4,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.control.robots.DependencySupplier;
 import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
 
 import java.util.LinkedList;
 
 public class SliderArmDependencies implements SliderArmDependenciesI {
     private static final String SLIDER_DRIVE_PREFIX = "S";
+    private static final byte DEFAULT_PRIORITY = 0xA;
 
     private static String getDefaultSliderName(int index) {
         return SLIDER_DRIVE_PREFIX + index;
@@ -25,6 +27,8 @@ public class SliderArmDependencies implements SliderArmDependenciesI {
 
     private HardwareMap hardwareMap;
 
+    private byte priority = -1;
+
     public SliderArmDependencies setSliderDriveNames(String ... names) {
         sliderDriveNames = names;
         return this;
@@ -37,6 +41,11 @@ public class SliderArmDependencies implements SliderArmDependenciesI {
 
     public SliderArmDependencies setSliderDrives(DcMotor ... motors) {
         sliderDrives = motors;
+        return this;
+    }
+
+    public SliderArmDependencies setPriority(byte priority) {
+        this.priority = priority;
         return this;
     }
 
@@ -61,6 +70,12 @@ public class SliderArmDependencies implements SliderArmDependenciesI {
     }
 
     @Override
+    public DependencySupplier setHardwareMap(HardwareMap map) {
+        hardwareMap = map;
+        return this;
+    }
+
+    @Override
     public void resolveDependencies() {
         resolveMotors();
         resolveDirections();
@@ -71,6 +86,12 @@ public class SliderArmDependencies implements SliderArmDependenciesI {
     public void resolveDependencies(HardwareMap map) {
         hardwareMap = map;
         resolveDependencies();
+    }
+
+    @Override
+    public int getPriority() {
+        if (priority == -1) priority = DEFAULT_PRIORITY;
+        return priority;
     }
 
     private void resolveMotors() {

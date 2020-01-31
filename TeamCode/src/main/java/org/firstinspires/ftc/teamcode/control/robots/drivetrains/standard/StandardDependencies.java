@@ -11,6 +11,7 @@ import java.util.LinkedList;
 public class StandardDependencies implements StandardDependenciesI {
     private static final String LEFT_PREFIX = "L";
     private static final String RIGHT_PREFIX = "R";
+    private static final byte DEFAULT_PRIORITY = 0xA;
 
     private static String getDefaultLeftName(int index) {
         return LEFT_PREFIX + index;
@@ -33,6 +34,8 @@ public class StandardDependencies implements StandardDependenciesI {
     private DcMotor[] rightDrives;
 
     private HardwareMap hardwareMap;
+
+    private byte priority = -1;
 
     public StandardDependencies setLeftDriveNames(String ... leftDriveNames) {
         this.leftDriveNames = leftDriveNames;
@@ -66,6 +69,11 @@ public class StandardDependencies implements StandardDependenciesI {
 
     public StandardDependencies setHardwareMap(HardwareMap map) {
         hardwareMap = map;
+        return this;
+    }
+
+    public StandardDependencies setPriority(byte priority) {
+        this.priority = priority;
         return this;
     }
 
@@ -114,6 +122,12 @@ public class StandardDependencies implements StandardDependenciesI {
     public void resolveDependencies(HardwareMap map) {
         hardwareMap = map;
         resolveDependencies();
+    }
+
+    @Override
+    public int getPriority() {
+        if (priority == -1) priority = DEFAULT_PRIORITY;
+        return priority;
     }
 
     private void resolveMotors() {

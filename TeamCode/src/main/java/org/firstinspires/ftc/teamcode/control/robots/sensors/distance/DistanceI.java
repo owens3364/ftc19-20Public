@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.control.robots.sensors;
+package org.firstinspires.ftc.teamcode.control.robots.sensors.distance;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.control.robots.Refreshable;

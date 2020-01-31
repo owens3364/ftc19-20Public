@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.control.robots.sensors;
+package org.firstinspires.ftc.teamcode.control.robots.sensors.distance;
 
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -8,11 +8,17 @@ import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
 
 public class Rev2mDistanceImpl implements DistanceI {
     private final Rev2mDistanceSensor sensor;
+    private final DistanceDependenciesI dependencies;
     private DistanceUnit unit;
 
-    public Rev2mDistanceImpl(String name, HardwareMap map) {
-        this.sensor = map.get(Rev2mDistanceSensor.class, name);
-        sensor.initialize();
+    public Rev2mDistanceImpl(HardwareMap map) {
+        this(map, new DistanceDependencies());
+    }
+
+    public Rev2mDistanceImpl(HardwareMap map, DistanceDependenciesI dependencies) {
+        this.dependencies = dependencies;
+        dependencies.resolveDependencies(map);
+        sensor = dependencies.getSensor();
     }
 
     @Override
@@ -37,7 +43,7 @@ public class Rev2mDistanceImpl implements DistanceI {
 
     @Override
     public Refreshable refresh() {
-        sensor.initialize();
+        dependencies.refresh();
         return this;
     }
 }

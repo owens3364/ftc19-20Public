@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.control.robots.sensors;
+package org.firstinspires.ftc.teamcode.control.robots.sensors.digital;
 
 import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
 

@@ -62,6 +62,12 @@ public class AngularSliderArmDependencies extends SliderArmDependencies implemen
     }
 
     @Override
+    public AngularSliderArmDependencies setHardwareMap(HardwareMap map) {
+        hardwareMap = map;
+        return this;
+    }
+
+    @Override
     public void resolveDependencies() {
         super.resolveDependencies();
         resolveMotors();

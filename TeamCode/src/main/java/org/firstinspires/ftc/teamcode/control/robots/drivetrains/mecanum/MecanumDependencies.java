@@ -17,6 +17,8 @@ public class MecanumDependencies implements MecanumDependenciesI {
     private static final DcMotorSimple.Direction REAR_LEFT_DRIVE_DIRECTION = DcMotorSimple.Direction.FORWARD;
     private static final DcMotorSimple.Direction REAR_RIGHT_DRIVE_DIRECTION = DcMotorSimple.Direction.REVERSE;
 
+    private static final byte DEFAULT_PRIORITY = 0xA;
+
     private String frontLeftDriveName;
     private String frontRightDriveName;
     private String rearLeftDriveName;
@@ -33,6 +35,8 @@ public class MecanumDependencies implements MecanumDependenciesI {
     private DcMotor rearRightDrive;
 
     private HardwareMap hardwareMap;
+
+    private byte priority = -1;
 
     public MecanumDependencies setFrontLeftDriveName(String name) {
         frontLeftDriveName = name;
@@ -96,6 +100,11 @@ public class MecanumDependencies implements MecanumDependenciesI {
 
     public MecanumDependencies setHardwareMap(HardwareMap map) {
         hardwareMap = map;
+        return this;
+    }
+
+    public MecanumDependencies setPriority(byte priority) {
+        this.priority = priority;
         return this;
     }
 
@@ -174,6 +183,12 @@ public class MecanumDependencies implements MecanumDependenciesI {
     public void resolveDependencies(HardwareMap map) {
         hardwareMap = map;
         resolveDependencies();
+    }
+
+    @Override
+    public int getPriority() {
+        if (priority == -1) priority = DEFAULT_PRIORITY;
+        return priority;
     }
 
     private void resolveMotors() {

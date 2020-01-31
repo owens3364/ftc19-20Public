@@ -3,12 +3,14 @@ package org.firstinspires.ftc.teamcode.control.robots.auxiliaries.grippers.gripp
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.control.robots.DependencySupplier;
 import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
 
 public class GripperDependencies implements GripperDependenciesI {
     private static final String PITCH_SERVO_NAME = "PITCH";
     private static final String YAW_SERVO_NAME = "YAW";
     private static final String GRIPPER_SERVO_NAME = "GRIPPER";
+    private static final byte DEFAULT_PRIORITY = 0xA;
 
     private String pitchServoName;
     private String yawServoName;
@@ -19,6 +21,8 @@ public class GripperDependencies implements GripperDependenciesI {
     private Servo gripperServo;
 
     private HardwareMap hardwareMap;
+
+    private byte priority = -1;
 
     public GripperDependencies setPitchServoName(String name) {
         pitchServoName = name;
@@ -47,6 +51,11 @@ public class GripperDependencies implements GripperDependenciesI {
 
     public GripperDependencies setGripperServo(Servo servo) {
         gripperServo = servo;
+        return this;
+    }
+
+    public GripperDependencies setPriority(byte priority) {
+        this.priority = priority;
         return this;
     }
 
@@ -87,6 +96,12 @@ public class GripperDependencies implements GripperDependenciesI {
     }
 
     @Override
+    public DependencySupplier setHardwareMap(HardwareMap map) {
+        hardwareMap = map;
+        return this;
+    }
+
+    @Override
     public void resolveDependencies() {
         if (pitchServo == null) {
             if (pitchServoName != null) {
@@ -118,6 +133,12 @@ public class GripperDependencies implements GripperDependenciesI {
     public void resolveDependencies(HardwareMap map) {
         hardwareMap = map;
         resolveDependencies();
+    }
+
+    @Override
+    public int getPriority() {
+        if (priority == -1) priority = DEFAULT_PRIORITY;
+        return priority;
     }
 
     @Override

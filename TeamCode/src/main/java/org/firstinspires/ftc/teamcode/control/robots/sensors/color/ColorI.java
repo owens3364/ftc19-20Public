@@ -1,4 +1,6 @@
-package org.firstinspires.ftc.teamcode.control.robots.sensors;
+package org.firstinspires.ftc.teamcode.control.robots.sensors.color;
+
+import org.firstinspires.ftc.teamcode.control.robots.sensors.distance.DistanceI;
 
 public interface ColorI extends DistanceI {
     double getRed();

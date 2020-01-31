@@ -42,16 +42,14 @@ public class CompetitionTeleOp extends OpMode implements Recordable {
 
     private static final double DRIVE_SPEED_CAPACITY = .8;
 
-    private static final double INTAKE_SPEED_CAPACITY = 0.75;
-
     private static final byte LOW_SPEED_CONTROL_FACTOR = 0x3; // This is exponential ie stickValue^LOW_SPEED_CONTROL_FACTOR
 
     private static final double DEFAULT_PITCH_POSITION = 0.3;
     private static final double DEFAULT_GRIPPER_POSITION = 0.5;
 
-    private static final double DEFAULT_INTAKE_PITCH_POSITION = 0.5;
-    private static final byte DEFAULT_INTAKE_LEFT_POSITION = 0x1;
-    private static final byte DEFAULT_INTAKE_RIGHT_POSITION = 0x0;
+    private static final byte LIFT_MIN = 0x0;
+
+    private static final byte CD_THRESHOLD = 0x37;
 
     private static final byte PITCH_MIN = -0x1;
 
@@ -91,22 +89,7 @@ public class CompetitionTeleOp extends OpMode implements Recordable {
     @Observable(key = "Gripper Position")
     private double gripperPosition = DEFAULT_GRIPPER_POSITION;
     @Observable(key = "Gripper Toggled Closed")
-    private boolean gripperToggledClosed = false;
-
-    @Observable(key = "Intake Left Position")
-    private double intakeLeftPosition = DEFAULT_INTAKE_LEFT_POSITION;
-    @Observable(key = "Intake Right Position")
-    private double intakeRightPosition = DEFAULT_INTAKE_RIGHT_POSITION;
-    @Observable(key = "Intake Toggled Out")
-    private boolean intakeToggledOut = false;
-
-    @Observable(key = "Intake Pitch Out")
-    private boolean intakePitchOut = true;
-
-    @Observable(key = "Intake Running")
-    private boolean intakeRunning = false;
-    @Observable(key = "Intake Inverted")
-    private boolean intakeInverted = false;
+    private boolean gripperToggledClosed = true;
 
     @Observable(key = "Foundation Arms Toggled Out")
     private boolean foundationArmsToggledOut = false;
@@ -129,15 +112,7 @@ public class CompetitionTeleOp extends OpMode implements Recordable {
     @Observable(key = "Gamepad 2 RB Pressed")
     private boolean gamepad2RBPressed;
     @Observable(key = "Gamepad 2 A Pressed")
-    private boolean gamepad2APressed;
-    @Observable(key = "Gamepad 2 B Pressed")
     private boolean gamepad2BPressed;
-    @Observable(key = "Gamepad 2 X Pressed")
-    private boolean gamepad2XPressed;
-    @Observable(key = "Gamepad 2 Y Pressed")
-    private boolean gamepad2YPressed;
-    @Observable(key = "Gamepad 2 Dpad Down Pressed")
-    private boolean gamepad2DpadDown;
 
     @Observable(key = "Overriding Automation")
     private boolean overridingAutomation = false;
@@ -155,7 +130,7 @@ public class CompetitionTeleOp extends OpMode implements Recordable {
 
         Object cachedObj = FtcRobotControllerActivity.soloInstance().getCachedRobotObject();
         robot              = cachedObj instanceof CompetitionRobotI ? (CompetitionRobot) ((CompetitionRobotI) cachedObj).refresh() : CompetitionRobot.instantiate(hardwareMap);
-        FtcRobotControllerActivity.soloInstance().setCachedRobotObject(robot);
+        FtcRobotControllerActivity.soloInstance().setCachedRobotObject(cachedObj);
         motorNames         = robot.getMotorNames();
         servoNames         = robot.getServoNames();
         motorVarNames      = robot.getMotorVarNames();
@@ -237,52 +212,10 @@ public class CompetitionTeleOp extends OpMode implements Recordable {
             gamepad2RBPressed = true;
         }
 
-        if (!controller2.a()) {
-            if (gamepad2APressed) {
-                intakeToggledOut = !intakeToggledOut;
-                intakeLeftPosition = (intakeToggledOut ? ACTUAL_SERVO_MIN : DEFAULT_INTAKE_LEFT_POSITION);
-                intakeRightPosition = (intakeToggledOut ? ACTUAL_SERVO_MAX : DEFAULT_INTAKE_RIGHT_POSITION);
-            }
-            gamepad2APressed = false;
-        } else {
-            gamepad2APressed = true;
-        }
-
-        if (!controller2.dpadDown()) {
-            if (gamepad2DpadDown) {
-                intakeRunning = !intakeRunning;
-            }
-            gamepad2DpadDown = false;
-        } else {
-            gamepad2DpadDown = true;
-        }
-
-        if (!controller2.x()) {
-            if (gamepad2XPressed) {
-                intakeInverted = !intakeInverted;
-            }
-            gamepad2XPressed = false;
-        } else {
-            gamepad2XPressed = true;
-        }
-
-        if (!controller2.y()) {
-            if (gamepad2YPressed) {
-                intakePitchOut = !intakePitchOut;
-            }
-            gamepad2YPressed = false;
-        } else {
-            gamepad2YPressed = true;
-        }
-
         if (!overridingAutomation) {
-            if (robot.isTouchPressed()) {
+            if (robot.getDistance() < CD_THRESHOLD) {
                 gripperToggledClosed = true;
                 gripperPosition = ARTIFICIAL_SERVO_MAX;
-                intakeRunning = false;
-                intakeToggledOut = true;
-                intakeLeftPosition = ACTUAL_SERVO_MIN;
-                intakeRightPosition = ACTUAL_SERVO_MAX;
                 robot.setPattern(RevBlinkinLedDriver.BlinkinPattern.DARK_BLUE);
             } else {
                 robot.setPattern(RevBlinkinLedDriver.BlinkinPattern.WHITE);
@@ -293,10 +226,6 @@ public class CompetitionTeleOp extends OpMode implements Recordable {
 
         robot.setPitchPosition(Range.scale(pitchPosition, ARTIFICIAL_SERVO_MIN, ARTIFICIAL_SERVO_MAX, ACTUAL_SERVO_MIN, ACTUAL_SERVO_MAX));
         robot.setGripperPosition(Range.scale(gripperPosition, ARTIFICIAL_SERVO_MIN, ARTIFICIAL_SERVO_MAX, ACTUAL_SERVO_MIN, ACTUAL_SERVO_MAX));
-        robot.setIntakePitchPositions(intakePitchOut ? DEFAULT_INTAKE_PITCH_POSITION : 0);
-        robot.setLeftPosition(intakeLeftPosition);
-        robot.setRightPosition(intakeRightPosition);
-        robot.setIntakeSpeeds(intakeRunning ? INTAKE_SPEED_CAPACITY * (intakeInverted ? 1 : -1) : 0);
 
         if (!controller1.leftBumper()) {
             if (gamepad1LBPressed) {
@@ -347,10 +276,6 @@ public class CompetitionTeleOp extends OpMode implements Recordable {
             statements.add("robot.setRightServoPosition(" + (foundationArmsToggledOut ? 1 : 0) + ");");
             statements.add("robot.setPitchPosition(" + Range.scale(pitchPosition, ARTIFICIAL_SERVO_MIN, ARTIFICIAL_SERVO_MAX, ACTUAL_SERVO_MIN, ACTUAL_SERVO_MAX) + ");");
             statements.add("robot.setGripperPosition(" + Range.scale(gripperPosition, ARTIFICIAL_SERVO_MIN, ARTIFICIAL_SERVO_MAX, ACTUAL_SERVO_MIN, ACTUAL_SERVO_MAX) + ");");
-            statements.add("robot.setIntakePitchPosition(" + (intakePitchOut ? DEFAULT_INTAKE_PITCH_POSITION : 0) + ");");
-            statements.add("robot.setLeftPosition(" + intakeLeftPosition + ");");
-            statements.add("robot.setRightPosition(" + intakeRightPosition + ");");
-            statements.add("robot.setIntakeSpeeds(" + (intakeRunning ? INTAKE_SPEED_CAPACITY * (intakeInverted ? 1 : -1) : 0) + ");");
         }
         return statements;
     }

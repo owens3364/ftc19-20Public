@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.control.robots.DependencySupplier;
 import org.firstinspires.ftc.teamcode.control.robots.Refreshable;
 import org.firstinspires.ftc.teamcode.utils.ObjectPair;
 
@@ -18,6 +19,8 @@ public class CompliantIntakeDependencies implements CompliantIntakeDependenciesI
 
     private static final DcMotorSimple.Direction INTAKE_DRIVE_A_DIRECTION = DcMotorSimple.Direction.FORWARD;
     private static final DcMotorSimple.Direction INTAKE_DRIVE_B_DIRECTION = DcMotorSimple.Direction.REVERSE;
+
+    private static final byte DEFAULT_PRIORITY = 0xA;
 
     private String pitchServoAName;
     private String pitchServoBName;
@@ -37,6 +40,8 @@ public class CompliantIntakeDependencies implements CompliantIntakeDependenciesI
     private DcMotor intakeDriveB;
 
     private HardwareMap map;
+
+    private byte priority = -1;
 
     public CompliantIntakeDependencies setPitchServoAName(String name) {
         pitchServoAName = name;
@@ -108,6 +113,11 @@ public class CompliantIntakeDependencies implements CompliantIntakeDependenciesI
         return this;
     }
 
+    public CompliantIntakeDependencies setPriority(byte priority) {
+        this.priority = priority;
+        return this;
+    }
+
     @Override
     public ObjectPair<String, String> getPitchServoNames() {
         return new ObjectPair<>(pitchServoAName, pitchServoBName);
@@ -156,6 +166,12 @@ public class CompliantIntakeDependencies implements CompliantIntakeDependenciesI
     @Override
     public HardwareMap getHardwareMap() {
         return map;
+    }
+
+    @Override
+    public DependencySupplier setHardwareMap(HardwareMap map) {
+        this.map = map;
+        return this;
     }
 
     @Override
@@ -215,6 +231,12 @@ public class CompliantIntakeDependencies implements CompliantIntakeDependenciesI
     public void resolveDependencies(HardwareMap map) {
         this.map = map;
         resolveDependencies();
+    }
+
+    @Override
+    public int getPriority() {
+        if (priority == -1) priority = DEFAULT_PRIORITY;
+        return priority;
     }
 
     private void setModes() {
